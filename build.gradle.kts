@@ -40,6 +40,22 @@ dependencies {
     // Ktor
     testImplementation("io.ktor:ktor-server-tests:1.6.7")
     testImplementation("io.ktor:ktor-server-test-host:1.6.7")
+
+    // database
+    implementation ("mysql:mysql-connector-java:8.0.11")
+    implementation ("org.ktorm:ktorm-core:3.2.0")
+    implementation ("org.ktorm:ktorm-support-mysql:3.2.0")
+
+    // authentication
+    implementation("io.ktor:ktor-gson:1.6.7")
+    implementation("io.ktor:ktor-auth:1.6.7")
+    implementation("io.ktor:ktor-auth-jwt:1.6.7")
+
+    // ktor location
+    implementation("io.ktor:ktor-locations:1.6.7")
+
+    // https://mvnrepository.com/artifact/org.jetbrains.exposed/exposed
+    implementation("org.jetbrains.exposed:exposed:0.17.14")
 }
 
 tasks.withType<KotlinCompile> {
