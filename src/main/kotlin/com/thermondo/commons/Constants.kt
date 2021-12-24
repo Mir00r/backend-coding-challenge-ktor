@@ -12,6 +12,7 @@ class Constants {
         // jwt config
         const val JWT_ISSUER = "com.thermondo"
         const val JWT_REALM = "com.thermondo.todos"
+        const val KTOR_TODOLIST_JWT_SECRET = "com.thermondo.todos_jwt_secret"
 
         // claims
         const val CLAIM_USERID = "userId"

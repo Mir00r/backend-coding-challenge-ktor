@@ -2,6 +2,7 @@ package com.thermondo.routes
 
 import com.thermondo.authentication.JwtConfig
 import com.thermondo.commons.Constants
+import com.thermondo.domains.todos.repositories.TodoRepository
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
@@ -24,7 +25,7 @@ class TodoRoute
 
 
 @KtorExperimentalLocationsAPI
-fun Route.todos(db: Repository) {
+fun Route.todos(db: TodoRepository) {
     authenticate("jwt") {
         post<TodoRoute> {
             val todosParameters = call.receive<Parameters>()
@@ -39,7 +40,7 @@ fun Route.todos(db: Repository) {
             val user = call.authentication.principal as JwtConfig.JwtUser
 
             try {
-                val currentTodo = db.addTodo(user.userId, title, done.toBoolean())
+                val currentTodo = db.add(user.userId, title, body, tags)
                 currentTodo?.id?.let {
                     call.respond(HttpStatusCode.OK, currentTodo)
                 }
@@ -60,11 +61,11 @@ fun Route.todos(db: Repository) {
             val offset = if (todosParameters.contains("offset")) todosParameters["offset"] else null
             try {
                 if (limit != null && offset != null) {
-                    val todos = db.getTodos(user.userId, offset.toInt(), limit.toInt())
+                    val todos = db.get(user.userId, offset.toInt(), limit.toInt())
                     call.respond(todos)
 
                 } else {
-                    val todos = db.getTodos(user.userId)
+                    val todos = db.get(user.userId)
                     call.respond(todos)
                 }
             } catch (e: Throwable) {
@@ -86,7 +87,7 @@ fun Route.todos(db: Repository) {
             val user = call.authentication.principal as JwtConfig.JwtUser
 
             try {
-                db.deleteTodo(user.userId, todoId.toInt())
+                db.delete(user.userId, todoId.toInt())
                 call.respond(HttpStatusCode.OK)
             } catch (e: Throwable) {
                 application.log.error("Failed to delete todo", e)

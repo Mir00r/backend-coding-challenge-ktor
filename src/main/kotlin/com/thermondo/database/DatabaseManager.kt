@@ -12,7 +12,7 @@ import org.ktorm.database.Database
  * @project IntelliJ IDEA
  * @author mir00r on 22/12/21
  */
-class DatabaseManager {
+object DatabaseManager {
     // config
     private val hostname = "vm-core.fritz.box"
     private val databaseName = "ktor_todo"

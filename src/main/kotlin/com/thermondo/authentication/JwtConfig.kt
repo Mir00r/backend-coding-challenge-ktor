@@ -12,9 +12,9 @@ import java.util.*
  * @project IntelliJ IDEA
  * @author mir00r on 23/12/21
  */
-class JwtConfig(jwtSecret: String) {
+class JwtConfig {
 
-    private val jwtAlgorithm = Algorithm.HMAC512(jwtSecret)
+    private val jwtAlgorithm = Algorithm.HMAC512(Constants.KTOR_TODOLIST_JWT_SECRET)
     private val jwtVerifier: JWTVerifier = JWT
         .require(jwtAlgorithm)
         .withIssuer(Constants.JWT_ISSUER)
